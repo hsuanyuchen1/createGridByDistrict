@@ -13,7 +13,7 @@ createGrid = function(tpc, taiwanPoly){
   
 }
 
-
+#create 25m grid district by district
 taiwanPoly <- st_read("d:/Test/createGrid/TWN/Twn5000a2.TAB")
 colnames(taiwanPoly)[5] <- "postcode"
 taiwanPoly <- taiwanPoly[,c("postcode")]
@@ -23,7 +23,7 @@ upc <- unique(taiwanPoly$postcode)
 sapply(upc, function(x) {createGrid(x, taiwanPoly)})
 
 
-
+#load all the grids and merge into one single Mapinfo TAB
 totalList <- list.files("d:/Test/createGrid/data/", full.names = T)
 totalCsv <- lapply(totalList, function(x) fread(x)) %>% rbindlist()
 fwrite(totalCsv[,c("X", "Y", "postcode")], "d:/Test/createGrid/TaiwanGrid.csv")
